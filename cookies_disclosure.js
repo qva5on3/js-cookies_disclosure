@@ -85,7 +85,10 @@ function display_disclosure(position, privacy_policy_uri) {
 
 }
 
-function display_disclosure_position(position = 'top', display_seconds = 0) {
+function display_disclosure_position(position, display_seconds) {
+  position = typeof position !== 'undefined' ? position : 'top';
+  display_seconds = typeof display_seconds !== 'undefined' ? display_seconds : 0;
+
   $('#cookiesdirective').animate(
     position == 'top' ? { top: '0' } : {bottom: '0'},
     1000, function() {
