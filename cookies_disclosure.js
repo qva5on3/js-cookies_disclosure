@@ -135,16 +135,16 @@ function disclosure_text(position, privacy_policy_uri) {
                         left:0px;\
                         width:100%;\
                         height:auto;\
-                        background:#000000;\
-                        opacity:.80; \
-                        -ms-filter: “alpha(opacity=80)”; \
-                        filter: alpha(opacity=80);\
-                        -khtml-opacity: .80; \
-                        -moz-opacity: .80; \
-                        color:#FFFFFF;\
+                        background:#efefef;\
+                        opacity:.95; \
+                        -ms-filter: “alpha(opacity=95)”; \
+                        filter: alpha(opacity=95);\
+                        -khtml-opacity: .95; \
+                        -moz-opacity: .95; \
+                        color:#000000;\
                         font-family:arial;\
-                        font-size:14px;\
-                        text-align:center;\
+                        font-size:12px;\
+                        text-align:justify;\
                         z-index:1000;\
                       ">';
   disclosure +='<div \
@@ -155,9 +155,19 @@ function disclosure_text(position, privacy_policy_uri) {
                     padding:15px;\
                     margin-left:auto;\
                     margin-right:auto;">';
-  disclosure += 'This website uses cookies, see our <a style="color:#ca0000;font-weight:bold;" href="'+ privacy_policy_uri + '">privacy policy</a>.<br/><br/>';
-  disclosure += 'I accept cookies from this site <input type="checkbox" name="cookiesagree" id="cookiesagree" />&nbsp;';
-  disclosure += '<input type="submit" name="cookiessubmit" id="cookiessubmit" value="Continue"/>';
+
+  disclosure += 'Nasze strony wykorzystują pliki cookies. <br/> \
+                 Na naszych stronach używamy informacji zapisanych za pomocą \
+                 cookies w celach reklamowy, statystycznych oraz w celu \
+                 dostosowania stron do indywidualnych potrzeb użytkowników.<br/>\
+                 W przeglądarce można zmienić ustawienia dotyczące cookies. \
+                 Korzystanie z naszych stron bez zmiań ustawień dotyczących \
+                 plików cookies oznacza, że będą one zapisane w pamięci \
+                 urządzenia. Więcej informacji można znaleźć w naszym \
+                 <a style="color:#ca0000;font-weight:bold;" href="'+ privacy_policy_uri + '">regulaminie</a>.';
+
+  disclosure += '<br/><br/>';
+  disclosure += '<input type="submit" name="cookiessubmit" id="cookiessubmit" value="Akceptuję"/>';
   disclosure += '</div>';
   disclosure += '</div>';
 
@@ -176,7 +186,7 @@ function read_cookie(name) {
     }
 
     if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
+      return unescape(c.substring(name.length, c.length));
     }
   }
 
@@ -184,15 +194,12 @@ function read_cookie(name) {
 }
 
 function create_cookie(name, value, days) {
-  if (days) {
-    var date = new Date();
-    date.setTime(date.getTime()+(days*24*60*60*1000));
-    var expires = "; expires="+date.toGMTString();
-  } else {
-    var expires = "";
-  }
+  var date = new Date();
+  date.setTime(date.getTime()+(days*24*60*60*1000));
 
-  document.cookie = name + "=" + value + expires + "; path=/";
+  value= escape(value) + (days ? "; expires="+date.toUTCString() : "");
+
+  document.cookie = name + "=" + value;
 }
 
 function detect_IE789(){
