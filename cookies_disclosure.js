@@ -199,7 +199,7 @@ function create_cookie(name, value, days) {
 
   value= escape(value) + (days ? "; expires="+date.toUTCString() : "");
 
-  document.cookie = name + "=" + value;
+  document.cookie = name + "=" + value + "; path=/";
 }
 
 function detect_IE789(){
